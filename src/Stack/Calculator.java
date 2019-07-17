@@ -1,6 +1,4 @@
 package Stack;
-
-
 public class Calculator {
     public static void main(String[] args) {
         String expression = "7*2*2-5+1-6/2+4";
