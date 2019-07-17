@@ -45,7 +45,7 @@ public class LinkListStackDemo {
     }
 }
 
-//定义一个LinkListStack 表示栈
+//定义一个LinkLi stStack 表示栈
 class LinkListStack {
     private int maxSize;//栈的大小
     private LinkList Linkstack = new LinkList(); //链表，链表模拟栈，数据就放在该链表中

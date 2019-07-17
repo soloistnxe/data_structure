@@ -6,7 +6,7 @@ public class Josepfu {
         CircleSingleLinkedList circleSingleLinkedList = new CircleSingleLinkedList();
         circleSingleLinkedList.addBoy(25);
         circleSingleLinkedList.ShowBoy();
-        circleSingleLinkedList.conutBoy(1,3,25);
+        circleSingleLinkedList.conutBoy(1, 3, 25);
     }
 }
 
@@ -86,22 +86,22 @@ class CircleSingleLinkedList {
         }
         //当小孩报数时，让first 和 helper 指针同时移动m-1次，然后出圈
         //这里时一个循环操作，直到圈中只有一个节点
-        while (true){
-            if(helper == first){//说明圈中只有一个
+        while (true) {
+            if (helper == first) {//说明圈中只有一个
                 break;
             }
             //让first和 helper 同时移动countNum-1次
-            for(int j=0;j<countNum-1;j++){
+            for (int j = 0; j < countNum - 1; j++) {
                 first = first.getNext();
                 helper = helper.getNext();
             }
             //这时first指向的节点，就是要出圈小孩的节点
-            System.out.printf("小孩%d出圈\n",first.getNo());
+            System.out.printf("小孩%d出圈\n", first.getNo());
             //这时将first指向的小孩出圈
             first = first.getNext();
             helper.setNext(first);
         }
-        System.out.printf("最后留在圈中的小孩编号%d\n",first.getNo());
+        System.out.printf("最后留在圈中的小孩编号%d\n", first.getNo());
     }
 
 }
