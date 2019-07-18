@@ -1,5 +1,5 @@
 package Stack;
-//计算器，不支持括号,使用自己编写的栈结构
+//计算器，不支持括号,使用自己编写的栈结构。
 public class Calculator {
     public static void main(String[] args) {
         String expression = "7*2*2-5+1-6/2+4";
