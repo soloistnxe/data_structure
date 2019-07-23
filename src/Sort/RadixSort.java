@@ -16,6 +16,7 @@ package Sort;
 (2)  然后从 0-9 个数组/桶，依次，按照加入元素的先后顺序取出
 
 基数排序会耗费很多内存空间，可能会有内存不足的错误
+如果有负数的话不要用基数排序
 * */
 import java.text.SimpleDateFormat;
 import java.util.Date;
