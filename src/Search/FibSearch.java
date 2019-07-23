@@ -7,7 +7,7 @@ public class FibSearch {
 
     public static void main(String[] args) {
         int arr[] = {1, 8, 10, 89, 1000, 1234};
-        System.out.println(fibSearch(arr,1234));
+        System.out.println(fibSearch(arr, 1234));
     }
 
     //因为后面mid=left+F（k-1）-1需要使用到斐波那契数列
@@ -36,16 +36,16 @@ public class FibSearch {
         }
         //因为f[k]值可能大于数组的长度，因此使用Arrays构造一个新的数组，并指向a[]
         //不足的部分会使用0填充
-        int []temp = Arrays.copyOf(a,f[k]);
+        int[] temp = Arrays.copyOf(a, f[k]);
         //实际上需要使用a数组最后的数填充temp
-        for(int i =high+1;i<temp.length;i++){
-            temp[i]=a[high];
+        for (int i = high + 1; i < temp.length; i++) {
+            temp[i] = a[high];
         }
         //使用while循环来处理，找到我们的key
-        while(low<=high){//只要满足这个条件，就可以找
-            mid = low+f[k-1]-1;
-            if(key<temp[mid]){ //向左查找
-                high = mid -1;
+        while (low <= high) {//只要满足这个条件，就可以找
+            mid = low + f[k - 1] - 1;
+            if (key < temp[mid]) { //向左查找
+                high = mid - 1;
                 //说明
                 //1. 全部元素 = 前面的元素 + 后边元素
                 //2. f[k] = f[k-1] + f[k-2]
@@ -53,18 +53,18 @@ public class FibSearch {
                 //即 在 f[k-1] 的前面继续查找 k--
                 //即下次循环 mid = f[k-1-1]-1
                 k--;
-            }else if(key>temp[mid]){//向右查找
-                low=mid+1;
+            } else if (key > temp[mid]) {//向右查找
+                low = mid + 1;
                 //说明
                 //1. 全部元素 = 前面的元素 + 后边元素
                 //2. f[k] = f[k-1] + f[k-2]
                 //3. 因为后面我们有f[k-2] 所以可以继续拆分 f[k-1] = f[k-3] + f[k-4]
                 //4. 即在f[k-2] 的前面进行查找 k -=2
                 //5. 即下次循环 mid = f[k - 1 - 2] - 1
-                k-=2;
-            }else { //找到
+                k -= 2;
+            } else { //找到
                 //需要确定，返回的是哪个下标
-                if(mid <= high) {
+                if (mid <= high) {
                     return mid;
                 } else {
                     return high;
