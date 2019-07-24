@@ -124,6 +124,7 @@ class EmpLinkedList {
     //添加员工到链表
     //1.假定添加雇员就是加在链表的背后，id是自增长的，即id的分配总是从小到大
     //因此我们将该雇员直接加入到本链表的最后即可
+    //增加了自动按照顺序添加id
     public void add(Emp emp) {
         //如果是添加第一个雇员
         if (head == null) {
@@ -133,12 +134,26 @@ class EmpLinkedList {
         //如果不是添加第一个雇员,则使用一个辅助指针
         Emp cur = head;
         while (true) {
+            if(head.id>emp.id){
+                Emp temp = head;
+                head = emp;
+                head.next = temp;
+                break;
+
+            }
+
             if (cur.next == null) {//说明到了链表的最后
+                cur.next = emp;
+                break;
+            }
+            if(cur.next.id>emp.id){
+                Emp temp = cur.next;
+                cur.next = emp;
+                emp.next = temp;
                 break;
             }
             cur = cur.next; //后移
         }
-        cur.next = emp;
 
     }
 
@@ -183,12 +198,17 @@ class EmpLinkedList {
         //判断链表是否为空
         if (head == null) {
             System.out.println("链表空");
+            return;
         }
         Emp cur = head;
         if (head.id == id) { //如果头结点就是要删除的节点
             head = head.next;
         } else {
             while (true) {
+                if (cur.next == null) {//说明遍历完了没找到
+                    System.out.println("没有找到要删除的节点");
+                    break;
+                }
                 if (cur.next.id == id) { //找到了待删除的节点
                     if (cur.next.next != null)
                         cur.next = cur.next.next;
@@ -196,6 +216,7 @@ class EmpLinkedList {
                         cur.next = null;
                     break;
                 }
+
                 cur = cur.next;
             }
         }
