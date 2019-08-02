@@ -1,30 +1,33 @@
-package BinarySortTree;
-//二叉排序树
-
-public class BinarySortTree {
+package Avl;
+//平衡二叉树
+public class AvlTreeDemo {
     public static void main(String[] args) {
-        int[] arr = {3, 7, 10, 12, 5, 1, 9, 2};
-        BinarySort binarySort = new BinarySort();
+        //int arr[] = {4,3,6,5,7,8};
+        int arr[] = {10, 11, 7, 6, 8, 9};
+        //创建一个AVL
+        AVLTree avlTree = new AVLTree();
+        //添加
         for (int i = 0; i < arr.length; i++) {
-            binarySort.add(new Node(arr[i]));
+            avlTree.add(new Node(arr[i]));
         }
-        binarySort.FixOrder();
-        //测试删除叶子节点
-        binarySort.delNode(2);
-        binarySort.delNode(5);
-        binarySort.delNode(9);
-        binarySort.delNode(12);
-        binarySort.delNode(7);
-        binarySort.delNode(3);
-        binarySort.delNode(10);
-        System.out.println("删除节点后");
-        binarySort.FixOrder();
-    }
+        System.out.println("中序遍历");
+        avlTree.FixOrder();
 
+        System.out.println(avlTree.getRoot().height());
+        System.out.println("左子树高度" + avlTree.getRoot().leftHeight());
+        System.out.println("右子树高度" + avlTree.getRoot().rightHeight());
+        System.out.println(avlTree.getRoot().right.left);
+
+    }
 }
 
-class BinarySort {
+//创建AVL树
+class AVLTree {
     private Node root;
+
+    public Node getRoot() {
+        return root;
+    }
 
     //查找要删除的节点
     public Node search(int value) {
@@ -140,6 +143,54 @@ class Node {
     Node left;
     Node right;
 
+    //返回左子树的高度
+    public int leftHeight() {
+        if (left == null) {
+            return 0;
+        }
+        return left.height();
+    }
+
+    //返回右子树的高度
+    public int rightHeight() {
+        if (right == null) {
+            return 0;
+        }
+        return right.height();
+    }
+
+    //返回当前节点的高度，以该节点为根节点的树的高度
+    public int height() {
+        return Math.max(left == null ? 0 : left.height(), right == null ? 0 : right.height()) + 1;
+    }
+
+    //左旋转的方法
+    private void leftRotate() {
+        //创建新的节点,以当前这个根节点的值作为新的值
+        Node node = new Node(this.value);
+        //把新的节点的左子树设置为当前节点的左子树
+        node.left = this.left;
+        //把新的节点的右子树设置成当前节点的右子树的左子树
+        node.right = this.right.left;
+        //把当前节点的值替换成右子节点的值
+        this.value = this.right.value;
+        //把当前节点的右子树设置成右子树的右子树
+        this.right = this.right.right;
+        //把当前节点的左子树设置成新的节点
+        this.left = node;
+    }
+
+    //右旋转的方法
+    private void rightRotate() {
+        Node node = new Node(this.value);
+        //把新的节点的右子树设置为当前节点的右子树
+        node.right = right;
+        node.left = left.right;
+        value = left.value;
+        left = left.left;
+        right = node;
+    }
+
     @Override
     public String toString() {
         return "Node{" +
@@ -169,6 +220,30 @@ class Node {
                 this.right = node;
             else
                 this.right.add(node);
+        }
+        //当添加完一个节点后，如果右子树的高度-左子树的高度的值大于1，就左旋转
+        if (this.rightHeight() - this.leftHeight() > 1) {
+            //如果他的右子树的左子树高度大于他的右子树高度
+            if (right != null && right.leftHeight() > right.rightHeight()) {
+                right.rightRotate();
+                leftRotate();
+
+            } else {
+                leftRotate();
+            }
+            return;//必须要
+
+        }
+        //当添加完一个节点后，如果左子树的高度-右子树的高度的值大于1，就右旋转
+        if (this.leftHeight() - this.rightHeight() > 1) {
+            //如果他的左子树的右子树高度大于他的左子树高度
+            if (left != null && left.rightHeight() > left.leftHeight()) {
+                left.leftRotate();
+                rightRotate(); //左旋转
+
+            } else {
+                rightRotate();
+            }
         }
     }
 
