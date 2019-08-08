@@ -1,5 +1,5 @@
 package Recursion;
-
+//回溯法解决8皇后问题
 public class Queen8 {
     //定义一个max表示有多少个皇后
     int max = 8;
